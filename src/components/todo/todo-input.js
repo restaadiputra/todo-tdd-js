@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 function TodoInput({ onSubmitTodo }) {
   const [todo, setTodo] = useState('');
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    if (typeof onSubmitTodo === 'function') {
-      onSubmitTodo(todo);
-    }
-  }, [onSubmitTodo, todo]);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (typeof onSubmitTodo === 'function') {
+        onSubmitTodo(todo);
+        setTodo('');
+      }
+    },
+    [onSubmitTodo, todo]
+  );
 
   const handleChange = (e) => {
     e.persist();
@@ -25,9 +29,9 @@ function TodoInput({ onSubmitTodo }) {
           placeholder="Your Todo"
           value={todo}
           onChange={handleChange}
-          data-testid='todo-input-field'
+          data-testid="todo-input-field"
         />
-        <button type="submit" disabled={todo === ''} data-testid='todo-add-btn'>
+        <button type="submit" disabled={todo === ''} data-testid="todo-add-btn">
           Add
         </button>
       </form>
