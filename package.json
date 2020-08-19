@@ -9,8 +9,11 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
+    "build:tailwind": "tailwindcss build src/assets/tailwind.css -o src/assets/tailwind.output.css",
+    "prestart": "npm run build:tailwind",
+    "prebuild": "NODE_ENV=production npm run build:tailwind",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "npm run test -- --coverage",
     "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests",
@@ -58,10 +61,13 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^26.0.10",
+    "autoprefixer": "^9.8.6",
     "cross-env": "^7.0.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5"
+    "postcss-cli": "^7.1.1",
+    "prettier": "^2.0.5",
+    "tailwindcss": "^1.7.1"
   }
 }
