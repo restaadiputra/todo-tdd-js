@@ -18,12 +18,12 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "**/*.{ts,tsx}",
+      "**/*.{js,jsx}",
       "!**/build/**",
       "!**/node_modules/**",
       "!**/coverage/**",
-      "!**/serviceWorker.ts",
-      "!**/index.ts"
+      "!**/serviceWorker.js",
+      "!**/index.js"
     ]
   },
   "husky": {
