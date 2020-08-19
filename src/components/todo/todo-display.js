@@ -1,21 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function TodoDisplay({ todo }) {
-  if (!todo || todo.length === 0) {
+function TodoListDisplay({ todoList }) {
+  if (!todoList || todoList.length === 0) {
     return (
       <div>
-        <p>Todo is Empty</p>
+        <p>Todo List is Empty</p>
       </div>
     );
   }
 
   return (
     <div>
-      {todo.map((item, index) => (
+      {todoList.map((todo, index) => (
         <div key={index}>
-          <p>{item.title}</p>
-          {item.important === 'high' && (
+          <p>{todo.title}</p>
+          {todo.important === 'high' && (
             <span>Important</span>
           )}
         </div>
@@ -24,8 +24,8 @@ function TodoDisplay({ todo }) {
   );
 }
 
-TodoDisplay.propTypes = {
-  todo: PropTypes.array,
+TodoListDisplay.propTypes = {
+  todoList: PropTypes.array,
 };
 
-export default TodoDisplay;
+export default TodoListDisplay;

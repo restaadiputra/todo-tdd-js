@@ -1,17 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import { MainPage } from 'pages';
 
-function App(props) {
+function App() {
   return (
     <div>
-      
+      <MainPage />
     </div>
-  )
+  );
 }
 
-App.propTypes = {
-
-}
-
-export default App
-
+export default App;

@@ -1,10 +1,17 @@
-import React from 'react'
-import {TodoDisplay} from 'components/todo'
+import React, { useState } from 'react'
+import {TodoDisplay, TodoInput} from 'components/todo'
 
-function MainPage(props) {
+function MainPage() {
+  const [todoList, setTodoList] = useState([])
+
+  const addTodo = (todo) => {
+    setTodoList([...todoList, todo])
+  }
+
   return (
     <div>
-      <TodoDisplay />
+      <TodoInput onSubmitTodo={addTodo} />
+      <TodoDisplay todoList={todoList} />
     </div>
   )
 }

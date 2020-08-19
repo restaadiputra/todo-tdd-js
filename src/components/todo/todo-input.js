@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 function TodoInput({ onSubmitTodo }) {
-  const handleSubmit = (e) => {
+  const [todo, setTodo] = useState('');
+
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (typeof onSubmitTodo === 'function') {
-      onSubmitTodo(e);
+      onSubmitTodo(todo);
     }
+  }, [onSubmitTodo, todo]);
+
+  const handleChange = (e) => {
+    e.persist();
+    setTodo(e.target.value);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input name="todo" type="text" placeholder="Your Todo" />
-        <button type="submit">Add Todo</button>
+        <input
+          name="todo"
+          type="text"
+          placeholder="Your Todo"
+          value={todo}
+          onChange={handleChange}
+        />
+        <button type="submit" disabled={todo === ''}>
+          Add
+        </button>
       </form>
     </div>
   );
