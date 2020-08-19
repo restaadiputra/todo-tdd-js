@@ -14,8 +14,9 @@ function MainPage() {
   };
 
   return (
-    <div>
+    <div className="container mx-auto mt-4">
       <TodoInput onSubmitTodo={addTodo} />
+      <hr className="max-w-lg mx-auto my-4 border rounded border-gray-2" />
       <TodoDisplay todoList={todoList} onRemoveTodo={deleteTodoById} />
     </div>
   );

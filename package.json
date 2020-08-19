@@ -12,12 +12,12 @@
     "build:tailwind": "tailwindcss build src/assets/tailwind.css -o src/assets/tailwind.output.css",
     "prestart": "npm run build:tailwind",
     "prebuild": "NODE_ENV=production npm run build:tailwind",
-    "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "GENERATE_SOURCEMAP=false react-app-rewired build",
+    "test": "react-app-rewired test",
     "test:coverage": "npm run test -- --coverage",
-    "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests",
-    "eject": "react-scripts eject"
+    "test:staged": "cross-env CI=true react-app-rewired test --env=jsdom --findRelatedTests",
+    "eject": "react-app-rewired eject"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -63,11 +63,14 @@
     "@types/jest": "^26.0.10",
     "autoprefixer": "^9.8.6",
     "cross-env": "^7.0.2",
+    "customize-cra": "^1.0.0",
+    "customize-cra-react-refresh": "^1.1.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "postcss-cli": "^7.1.1",
     "prettier": "^2.0.5",
+    "react-app-rewired": "^2.1.6",
     "tailwindcss": "^1.7.1"
   }
 }
