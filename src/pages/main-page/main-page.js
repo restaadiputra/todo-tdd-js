@@ -5,7 +5,7 @@ function MainPage() {
   const [todoList, setTodoList] = useState([])
 
   const addTodo = (todo) => {
-    setTodoList([...todoList, todo])
+    setTodoList([todo,...todoList,])
   }
 
   return (

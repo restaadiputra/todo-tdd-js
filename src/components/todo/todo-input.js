@@ -25,8 +25,9 @@ function TodoInput({ onSubmitTodo }) {
           placeholder="Your Todo"
           value={todo}
           onChange={handleChange}
+          data-testid='todo-input-field'
         />
-        <button type="submit" disabled={todo === ''}>
+        <button type="submit" disabled={todo === ''} data-testid='todo-add-btn'>
           Add
         </button>
       </form>
