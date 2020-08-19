@@ -1,9 +1,26 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import TodoDisplay from './todo-display';
 
 const emptyTodoList = [];
-const todoList = ['Shopping', 'Shopping again', 'Shopping again and again'];
+const todoList = [
+  {
+    id: 1,
+    title: 'Shopping',
+  },
+  {
+    id: 2,
+    title: 'Shopping again',
+  },
+  {
+    id: 3,
+    title: 'Shopping again and again',
+  },
+];
+
+const setup = (options = {}) => ({
+  ...render(<TodoDisplay {...options} />),
+});
 
 afterEach(cleanup);
 
@@ -12,22 +29,27 @@ describe('TodoDisplay Component', () => {
     render(<TodoDisplay />);
   });
 
-  test("display empty wording if prop 'todo' is undefined", () => {
-    const { getByText } = render(<TodoDisplay />);
+  test('display empty wording if prop "todo" is undefined or an empty array', () => {
+    const { getByText, rerender } = setup();
     expect(getByText(/todo list is empty/i)).toBeInTheDocument();
-  });
-
-  test("display empty wording if prop 'todo' is empty array", () => {
-    const { getByText } = render(<TodoDisplay todoList={emptyTodoList} />);
+    rerender(<TodoDisplay todoList={emptyTodoList} />);
     expect(getByText(/todo list is empty/i)).toBeInTheDocument();
   });
 
   test('display todo list if todo is not empty array or undefined', () => {
-    render(<TodoDisplay todoList={todoList} />)
-    const todoDisplay = screen.getByTestId('todo-display')
+    const { getByTestId, getByText } = setup({ todoList });
+    const todoDisplay = getByTestId('todo-display');
     expect(todoDisplay.childElementCount).toBe(3);
-    expect(screen.getByText(todoList[0])).toBeInTheDocument();
-    expect(screen.getByText(todoList[1])).toBeInTheDocument();
-    expect(screen.getByText(todoList[2])).toBeInTheDocument();
+    expect(getByText(todoList[0].title)).toBeInTheDocument();
+    expect(getByText(todoList[1].title)).toBeInTheDocument();
+    expect(getByText(todoList[2].title)).toBeInTheDocument();
+  });
+
+  test('should call "onRemoveTodo" when remove button was clicked', () => {
+    const onRemoveTodo = jest.fn(() => {});
+    const { getByTestId } = setup({ todoList, onRemoveTodo });
+    const todoDeleteBtn = getByTestId('todo-display').children[0].lastChild;
+    fireEvent.click(todoDeleteBtn);
+    expect(onRemoveTodo).toHaveBeenCalledTimes(1);
   });
 });
