@@ -12,7 +12,30 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "npm run test -- --coverage",
+    "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/build/**",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/serviceWorker.ts",
+      "!**/index.ts"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run build"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css,scss,md}": [
+      "prettier --write",
+      "npm run test:staged"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,6 +57,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^26.0.10"
+    "@types/jest": "^26.0.10",
+    "cross-env": "^7.0.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
   }
 }
