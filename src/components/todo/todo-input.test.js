@@ -32,7 +32,6 @@ describe('TodoInput Component', () => {
 
     userEvent.type(inputTodo, todo);
     expect(btnAddTodo).not.toBeDisabled();
-    userEvent.click(btnAddTodo);
   });
 
   test('should call "onSubmitTodo" when button is clicked', () => {

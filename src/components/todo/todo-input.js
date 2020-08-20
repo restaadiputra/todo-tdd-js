@@ -7,10 +7,8 @@ function TodoInput({ onSubmitTodo }) {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      if (typeof onSubmitTodo === 'function') {
-        onSubmitTodo(todo);
-        setTodo('');
-      }
+      onSubmitTodo(todo);
+      setTodo('');
     },
     [onSubmitTodo, todo]
   );

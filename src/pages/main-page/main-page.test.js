@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MainPage from './main-page';
+import { check } from 'prettier';
 
 afterEach(cleanup);
 
@@ -19,11 +20,7 @@ const setup = () => {
 };
 
 describe('MainPage Component', () => {
-  test('should render without crash', () => {
-    render(<MainPage />);
-  });
-
-  test('should display one new todo if user input one', () => {
+  test('display one new todo if user input one', () => {
     const newTodo = 'Shopping in the market';
     const { todoAddButton, todoDisplay, todoInputField } = setup();
 
@@ -33,12 +30,15 @@ describe('MainPage Component', () => {
     userEvent.type(todoInputField, newTodo);
     userEvent.click(todoAddButton);
 
-    expect(todoDisplay.childElementCount).toBe(1);
+    const firstTodoElement = within(todoDisplay.children[0]);
 
-    expect(todoDisplay.children[0].firstChild.textContent).toBe(newTodo);
+    expect(todoDisplay.childElementCount).toBe(1);
+    expect(firstTodoElement.getByTestId('todo-title').textContent).toBe(
+      newTodo
+    );
   });
 
-  test('should display all todo with new todo if user input new one', () => {
+  test('display all todo with new todo if user input new one', () => {
     const newTodo = 'Shopping in the market';
     const anotherTodo = 'Play with friend';
     const { todoAddButton, todoDisplay, todoInputField } = setup();
@@ -46,18 +46,28 @@ describe('MainPage Component', () => {
     userEvent.type(todoInputField, newTodo);
     userEvent.click(todoAddButton);
 
+    const firstTodoElement = within(todoDisplay.children[0]);
+
     expect(todoDisplay.childElementCount).toBe(1);
-    expect(todoDisplay.children[0].firstChild.textContent).toBe(newTodo);
+    expect(firstTodoElement.getByTestId('todo-title').textContent).toBe(
+      newTodo
+    );
 
     userEvent.type(todoInputField, anotherTodo);
     userEvent.click(todoAddButton);
 
+    const secondTodoElement = within(todoDisplay.children[1]);
+
     expect(todoDisplay.childElementCount).toBe(2);
-    expect(todoDisplay.children[0].firstChild.textContent).toBe(anotherTodo);
-    expect(todoDisplay.children[1].firstChild.textContent).toBe(newTodo);
+    expect(firstTodoElement.getByTestId('todo-title').textContent).toBe(
+      anotherTodo
+    );
+    expect(secondTodoElement.getByTestId('todo-title').textContent).toBe(
+      newTodo
+    );
   });
 
-  test('should be able delete one todo and keep the rest', () => {
+  test('delete one todo and keep the rest', () => {
     const newTodo = 'Shopping in the market';
     const anotherTodo = 'Play with friend';
     const { todoAddButton, todoDisplay, todoInputField } = setup();
@@ -66,13 +76,40 @@ describe('MainPage Component', () => {
     userEvent.click(todoAddButton);
     userEvent.type(todoInputField, anotherTodo);
     userEvent.click(todoAddButton);
-    expect(todoDisplay.children[0].firstChild.textContent).toBe(anotherTodo);
-    expect(todoDisplay.children[1].firstChild.textContent).toBe(newTodo);
-    expect(todoDisplay.childElementCount).toBe(2);
 
-    const todoDelBtn = todoDisplay.children[0].lastChild;
+    const firstTodoElement = within(todoDisplay.children[0]);
+    const secondTodoElement = within(todoDisplay.children[1]);
+
+    expect(todoDisplay.childElementCount).toBe(2);
+    expect(firstTodoElement.getByTestId('todo-title').textContent).toBe(
+      anotherTodo
+    );
+    expect(secondTodoElement.getByTestId('todo-title').textContent).toBe(
+      newTodo
+    );
+
+    const todoDelBtn = within(todoDisplay.children[0]).getByRole('button');
     fireEvent.click(todoDelBtn);
     expect(todoDisplay.childElementCount).toBe(1);
-    expect(todoDisplay.children[0].firstChild.textContent).toBe(newTodo);
+    expect(firstTodoElement.getByTestId('todo-title').textContent).toBe(
+      newTodo
+    );
+  });
+
+  test('update one todo and keep the rest', () => {
+    const newTodo = 'Shopping in the market';
+    const { todoAddButton, todoDisplay, todoInputField } = setup();
+
+    userEvent.type(todoInputField, newTodo);
+    userEvent.click(todoAddButton);
+
+    const todoElement = within(todoDisplay.children[0]);
+    const checkbox = todoElement.getByRole('checkbox');
+
+    expect(checkbox.checked).toBeFalsy();
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toBeTruthy();
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toBeFalsy();
   });
 });

@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TodoListDisplay({ todoList, onRemoveTodo }) {
-  const handleTodoDelete = (id) => {
-    if (typeof onRemoveTodo === 'function') {
-      onRemoveTodo(id);
-    }
-  };
-
+function TodoListDisplay({ todoList, onRemoveTodo, onChangeTodoStatus }) {
   return (
     <div data-testid="todo-display" className="max-w-lg mx-auto mt-4">
       {!todoList || todoList.length === 0 ? (
@@ -20,13 +14,22 @@ function TodoListDisplay({ todoList, onRemoveTodo }) {
         todoList.map((todo, index) => (
           <div
             key={index}
-            className="mt-4 mx-auto px-4 py-2 rounded border-2 flex transition duration-500 ease-in-out"
+            className="mt-4 mx-auto px-4 py-2 rounded border-2 flex items-center transition duration-500 ease-in-out"
           >
-            <p className="text-lg text-left text-gray-500 flex-grow break-words w-5/6">
+            <input
+              type="checkbox"
+              className="form-checkbox h-5 w-5 mr-4 text-green-600 border-gray-500 outline-none"
+              checked={todo.status === 'done'}
+              onChange={() => onChangeTodoStatus(todo.id)}
+            />
+            <p
+              className="text-lg text-left text-gray-700 flex-grow break-words w-5/6"
+              data-testid="todo-title"
+            >
               {todo.title}
             </p>
             <button
-              onClick={() => handleTodoDelete(todo.id)}
+              onClick={() => onRemoveTodo(todo.id)}
               className="flex-shrink-0 ml-3 focus:outline-none"
             >
               <svg
@@ -50,6 +53,8 @@ function TodoListDisplay({ todoList, onRemoveTodo }) {
 
 TodoListDisplay.propTypes = {
   todoList: PropTypes.array,
+  onRemoveTodo: PropTypes.func,
+  onChangeTodoStatus: PropTypes.func,
 };
 
 export default TodoListDisplay;
