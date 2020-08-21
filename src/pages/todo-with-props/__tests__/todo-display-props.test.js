@@ -1,28 +1,21 @@
 import React from 'react';
 import { render, cleanup, fireEvent, within } from '@testing-library/react';
-import TodoDisplay from './todo-display';
+import TodoDisplayProps from '../todo-display-props';
 
 const emptyTodoList = [];
 const todoList = [
-  {
-    id: 1,
-    title: 'Shopping',
-    status: 'done',
-  },
-  {
-    id: 2,
-    title: 'Shopping again',
-    status: 'not-done',
-  },
-  {
-    id: 3,
-    title: 'Shopping again and again',
-    status: 'done',
-  },
+  { id: 1, title: 'Shopping', status: 'done' },
+  { id: 2, title: 'Shopping again', status: 'not-done' },
+  { id: 3, title: 'Shopping again and again', status: 'done' },
 ];
 
-const setup = (options = {}) => ({
-  ...render(<TodoDisplay {...options} />),
+const defaultProps = {
+  onRemoveTodo: () => {},
+  onChangeTodoStatus: () => {},
+};
+
+const setup = (props) => ({
+  ...render(<TodoDisplayProps {...defaultProps} {...props} />),
 });
 
 afterEach(cleanup);
@@ -31,7 +24,7 @@ describe('TodoDisplay Component', () => {
   test('display empty wording if prop "todo" is undefined or an empty array', () => {
     const { getByText, rerender } = setup();
     expect(getByText(/todo list is empty/i)).toBeInTheDocument();
-    rerender(<TodoDisplay todoList={emptyTodoList} />);
+    rerender(<TodoDisplayProps {...defaultProps} todoList={emptyTodoList} />);
     expect(getByText(/todo list is empty/i)).toBeInTheDocument();
   });
 
@@ -44,23 +37,25 @@ describe('TodoDisplay Component', () => {
     expect(getByText(todoList[2].title)).toBeInTheDocument();
   });
 
-  test('should call "onRemoveTodo" when remove button was clicked', () => {
-    const onRemoveTodo = jest.fn(() => {});
+  test('call "onRemoveTodo" function when remove button was clicked', () => {
+    const onRemoveTodo = jest.fn();
     const { getByTestId } = setup({ todoList, onRemoveTodo });
     const firstTodoElement = getByTestId('todo-display').children[0];
     const deleteBtn = within(firstTodoElement).getByRole('button');
 
     fireEvent.click(deleteBtn);
     expect(onRemoveTodo).toHaveBeenCalledTimes(1);
+    expect(onRemoveTodo).toHaveBeenCalledWith(todoList[0].id);
   });
 
-  test('should call "onChangeTodoStatus when checkbox was checked"', () => {
-    const onChangeTodoStatus = jest.fn(() => {});
+  test('call "onChangeTodoStatus when checkbox was checked"', () => {
+    const onChangeTodoStatus = jest.fn();
     const { getByTestId } = setup({ todoList, onChangeTodoStatus });
     const firstTodoElement = getByTestId('todo-display').children[0];
     const statusBtn = within(firstTodoElement).getByRole('checkbox');
 
     fireEvent.click(statusBtn);
     expect(onChangeTodoStatus).toHaveBeenCalledTimes(1);
+    expect(onChangeTodoStatus).toHaveBeenCalledWith(todoList[0].id);
   });
 });

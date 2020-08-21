@@ -1,17 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
+import { TodoContext } from './todo-provider';
 
-function TodoInput({ onSubmitTodo }) {
+function TodoInput() {
+  const { addTodo } = useContext(TodoContext);
   const [todo, setTodo] = useState('');
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      onSubmitTodo(todo);
-      setTodo('');
-    },
-    [onSubmitTodo, todo]
-  );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTodo(todo);
+    setTodo('');
+  };
 
   const handleChange = (e) => {
     e.persist();
@@ -21,13 +19,13 @@ function TodoInput({ onSubmitTodo }) {
   return (
     <div className="max-w-lg mx-auto">
       <form onSubmit={handleSubmit} className="flex items-center">
-        <div className="w-full rounded-l border-2 border-r-0 flex items-center">
+        <div className="w-full rounded-l border-2 border-r-0 border-orange-300 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            className="ml-4 h-6 w-6 text-gray-500"
+            className="ml-4 h-6 w-6 text-orange-500"
           >
             <path
               strokeLinecap="round"
@@ -43,14 +41,14 @@ function TodoInput({ onSubmitTodo }) {
             value={todo}
             onChange={handleChange}
             data-testid="todo-input-field"
-            className="px-4 py-2 w-full placeholder-opacity-25 outline-none text-400"
+            className="px-4 py-2 w-full placeholder-opacity-50 placeholder-orange-500 outline-none text-400 text-orange-600"
           />
         </div>
         <button
           type="submit"
           disabled={todo === ''}
           data-testid="todo-add-btn"
-          className="rounded-r border-2 h-full px-4 py-2 text-gray-700 bg-gray-300 whitespace-no-wrap transition duration-500 ease-in-out hover:bg-gray-400 hover:text-gray-600 hover:border-gray-400"
+          className="rounded-r border-2 border-orange-300 h-full px-4 py-2 text-orange-500 bg-orange-300 whitespace-no-wrap transition duration-500 ease-in-out hover:bg-orange-400 hover:text-orange-200 hover:border-orange-400"
         >
           Add
         </button>
@@ -58,9 +56,5 @@ function TodoInput({ onSubmitTodo }) {
     </div>
   );
 }
-
-TodoInput.propTypes = {
-  onSubmitTodo: PropTypes.func,
-};
 
 export default TodoInput;

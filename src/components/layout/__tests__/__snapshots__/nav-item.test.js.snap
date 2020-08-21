@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render without crash 1`] = `
+<a
+  aria-current="page"
+  class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white active"
+  href="/"
+>
+  <span>
+    Link
+  </span>
+</a>
+`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import TodoInput from './todo-input';
+import TodoInput from '../todo-input-props';
 
 afterEach(cleanup);
 const todo = 'Shooping';

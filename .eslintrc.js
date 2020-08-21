@@ -9,7 +9,7 @@ module.exports = {
     pragma: 'React',
     version: 'detect',
   },
-  extends: ['react-app', 'plugin:jsx-a11y/recommended'],
+  extends: ['eslint:recommended', 'react-app', 'plugin:jsx-a11y/recommended'],
   plugins: ['jsx-a11y'],
   parserOptions: {
     ecmaFeatures: {
@@ -17,5 +17,7 @@ module.exports = {
     },
     ecmaVersion: 2018,
   },
-  rules: {},
+  rules: {
+    
+  },
 };

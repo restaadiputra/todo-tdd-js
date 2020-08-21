@@ -1,12 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { TodoContext } from './todo-provider';
+import clsx from 'clsx';
 
-function TodoListDisplay({ todoList, onRemoveTodo, onChangeTodoStatus }) {
+function TodoDisplayContext() {
+  const { todoList, deleteTodoById, updateTodoById } = useContext(TodoContext);
+
   return (
     <div data-testid="todo-display" className="max-w-lg mx-auto mt-4">
       {!todoList || todoList.length === 0 ? (
         <div className="mx-auto px-4 py-2 rounded">
-          <p className="text-lg text-center text-gray-500">
+          <p className="text-lg text-center text-orange-500">
             Todo List is Empty
           </p>
         </div>
@@ -14,28 +17,33 @@ function TodoListDisplay({ todoList, onRemoveTodo, onChangeTodoStatus }) {
         todoList.map((todo, index) => (
           <div
             key={index}
-            className="mt-4 mx-auto px-4 py-2 rounded border-2 flex items-center transition duration-500 ease-in-out"
+            className="mt-4 mx-auto px-4 py-2 rounded border-2 border-orange-300 flex items-center transition duration-500 ease-in-out"
           >
             <input
               type="checkbox"
-              className="form-checkbox h-5 w-5 mr-4 text-green-600 border-gray-500 outline-none"
+              className="form-checkbox h-5 w-5 mr-4 text-orange-500 border-orange-500 outline-none"
               checked={todo.status === 'done'}
-              onChange={() => onChangeTodoStatus(todo.id)}
+              onChange={() => updateTodoById(todo.id)}
             />
             <p
-              className="text-lg text-left text-gray-700 flex-grow break-words w-5/6"
+              className={
+                'text-lg text-left flex-grow break-words w-5/6 transition-colors duration-500 ease-in-out ' +
+                (todo.status === 'done'
+                  ? 'text-orange-500 line-through'
+                  : 'text-orange-700')
+              }
               data-testid="todo-title"
             >
               {todo.title}
             </p>
             <button
-              onClick={() => onRemoveTodo(todo.id)}
+              onClick={() => deleteTodoById(todo.id)}
               className="flex-shrink-0 ml-3 focus:outline-none"
             >
               <svg
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="x-circle w-6 h-6 text-gray-500 transition duration-500 ease-in-out hover:text-gray-700"
+                className="x-circle w-6 h-6 text-orange-500 transition duration-500 ease-in-out hover:text-orange-700"
               >
                 <path
                   fillRule="evenodd"
@@ -51,10 +59,4 @@ function TodoListDisplay({ todoList, onRemoveTodo, onChangeTodoStatus }) {
   );
 }
 
-TodoListDisplay.propTypes = {
-  todoList: PropTypes.array,
-  onRemoveTodo: PropTypes.func,
-  onChangeTodoStatus: PropTypes.func,
-};
-
-export default TodoListDisplay;
+export default TodoDisplayContext;

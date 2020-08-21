@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { TodoDisplay, TodoInput } from 'components/todo';
+import TodoInput from './todo-input-props';
+import TodoDisplay from './todo-display-props';
 
-function MainPage() {
+function TodoWithProps() {
   const [todoList, setTodoList] = useState([]);
 
   const addTodo = (todo) => {
@@ -21,17 +22,20 @@ function MainPage() {
 
   const updateTodoById = (id) => {
     setTodoList(
-      todoList.map((todo) => {
-        return {
-          ...todo,
-          status: todo.status === 'done' ? 'not-done' : 'done',
-        };
-      })
+      todoList.map((todo) => ({
+        ...todo,
+        status:
+          todo.id === id
+            ? todo.status === 'done'
+              ? 'not-done'
+              : 'done'
+            : todo.status,
+      }))
     );
   };
 
   return (
-    <div className="container mx-auto mt-4">
+    <>
       <TodoInput onSubmitTodo={addTodo} />
       <hr className="max-w-lg mx-auto my-4 border rounded border-gray-2" />
       <TodoDisplay
@@ -39,8 +43,8 @@ function MainPage() {
         onRemoveTodo={deleteTodoById}
         onChangeTodoStatus={updateTodoById}
       />
-    </div>
+    </>
   );
 }
 
-export default MainPage;
+export default TodoWithProps;

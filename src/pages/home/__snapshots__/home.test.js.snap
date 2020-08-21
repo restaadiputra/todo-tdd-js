@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render without crash 1`] = `
+<div
+  class="max-w-lg mx-auto mt-4"
+>
+  <p
+    class="text-gray-800 text-lg text-center"
+  >
+    Just 3 simple todo app with 3 different method of state management. Use menu above to try each todo.
+  </p>
+</div>
+`;
