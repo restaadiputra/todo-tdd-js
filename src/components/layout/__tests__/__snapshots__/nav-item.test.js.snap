@@ -1,9 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`render without active css if route is not match 1`] = `
+<a
+  class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
+  href="/testing"
+>
+  <span />
+</a>
+`;
+
 exports[`render without crash 1`] = `
 <a
   aria-current="page"
-  class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white active"
+  class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white bg-gray-900 text-white"
   href="/"
 >
   <span>

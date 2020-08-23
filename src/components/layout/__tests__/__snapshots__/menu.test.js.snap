@@ -6,10 +6,10 @@ exports[`contain hidden class when menu is not open 1`] = `
   data-testid="menu"
 >
   <div
-    class="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto"
+    class="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto text-gray-400"
   >
     <a
-      class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
       href="/props"
     >
       <span>
@@ -17,7 +17,7 @@ exports[`contain hidden class when menu is not open 1`] = `
       </span>
     </a>
     <a
-      class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
       href="/context"
     >
       <span>
@@ -25,7 +25,7 @@ exports[`contain hidden class when menu is not open 1`] = `
       </span>
     </a>
     <a
-      class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
       href="/redux"
     >
       <span>
@@ -42,10 +42,10 @@ exports[`not contain hidden class when menu is open 1`] = `
   data-testid="menu"
 >
   <div
-    class="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto"
+    class="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto text-gray-400"
   >
     <a
-      class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
       href="/props"
     >
       <span>
@@ -53,7 +53,7 @@ exports[`not contain hidden class when menu is open 1`] = `
       </span>
     </a>
     <a
-      class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
       href="/context"
     >
       <span>
@@ -61,7 +61,7 @@ exports[`not contain hidden class when menu is open 1`] = `
       </span>
     </a>
     <a
-      class="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
       href="/redux"
     >
       <span>

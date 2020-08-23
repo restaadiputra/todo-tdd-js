@@ -16,3 +16,8 @@ test('render without label', () => {
   const { container } = renderWithRouter(<NavItem path="/"></NavItem>);
   expect(container.firstChild.firstChild.textContent).toBe('');
 });
+
+test('render without active css if route is not match', () => {
+  const { container } = renderWithRouter(<NavItem path="/testing"></NavItem>);
+  expect(container.firstChild).toMatchSnapshot();
+});

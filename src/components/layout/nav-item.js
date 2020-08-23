@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 function NavItem({ path, children }) {
+  const onActive = (_, location) => {
+    return location.pathname === path;
+  };
+
   return (
     <NavLink
       to={path}
-      className="w-full px-3 py-2 rounded text-gray-400 hover:bg-gray-900 hover:text-white"
+      exact
+      isActive={onActive}
+      activeClassName="bg-gray-900 text-white"
+      className="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
     >
       <span>{children || ''}</span>
     </NavLink>

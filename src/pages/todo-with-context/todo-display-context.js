@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { TodoContext } from './todo-provider';
-import clsx from 'clsx';
 
 function TodoDisplayContext() {
   const { todoList, deleteTodoById, updateTodoById } = useContext(TodoContext);

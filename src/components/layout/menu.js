@@ -12,7 +12,7 @@ function Menu({ openMenu }) {
       ])}
       data-testid="menu"
     >
-      <div className="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto">
+      <div className="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto text-gray-400">
         <NavItem path="/props">Props</NavItem>
         <NavItem path="/context">Context</NavItem>
         <NavItem path="/redux">Redux</NavItem>
