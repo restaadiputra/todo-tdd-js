@@ -1,13 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { TodoContext } from './todo-provider';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodo } from 'store/todoSlice';
 
-function TodoInputContext() {
-  const { addTodo } = useContext(TodoContext);
+function TodoInputRedux() {
+  const dispatch = useDispatch();
   const [todo, setTodo] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTodo(todo);
+    dispatch(addTodo(todo));
     setTodo('');
   };
 
@@ -19,13 +20,13 @@ function TodoInputContext() {
   return (
     <div className="max-w-lg mx-auto">
       <form onSubmit={handleSubmit} className="flex items-center">
-        <div className="w-full rounded-l border-2 border-r-0 border-orange-300 flex items-center">
+        <div className="w-full rounded-l border-2 border-r-0 border-purple-300 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            className="ml-4 h-6 w-6 text-orange-500"
+            className="ml-4 h-6 w-6 text-purple-500"
           >
             <path
               strokeLinecap="round"
@@ -41,14 +42,14 @@ function TodoInputContext() {
             value={todo}
             onChange={handleChange}
             data-testid="todo-input-field"
-            className="px-4 py-2 w-full placeholder-opacity-50 placeholder-orange-500 outline-none text-400 text-orange-600"
+            className="px-4 py-2 w-full placeholder-opacity-50 placeholder-purple-500 outline-none text-400 text-purple-600"
           />
         </div>
         <button
           type="submit"
           disabled={todo === ''}
           data-testid="todo-add-btn"
-          className="rounded-r border-2 border-orange-300 h-full px-4 py-2 text-orange-500 bg-orange-300 whitespace-no-wrap transition duration-500 ease-in-out hover:bg-orange-400 hover:text-orange-200 hover:border-orange-400"
+          className="rounded-r border-2 border-purple-300 h-full px-4 py-2 text-purple-500 bg-purple-300 whitespace-no-wrap transition duration-500 ease-in-out hover:bg-purple-400 hover:text-purple-200 hover:border-purple-400"
         >
           Add
         </button>
@@ -57,4 +58,4 @@ function TodoInputContext() {
   );
 }
 
-export default TodoInputContext;
+export default TodoInputRedux;
