@@ -10,9 +10,14 @@ exports[`render without crash 1`] = `
     src="todo.svg"
   />
   <p
-    class="text-gray-800 text-lg text-center px-6"
+    class="text-gray-800 text-lg text-center px-6 mb-4"
   >
     Just 3 simple todo app with 3 different method of state management. Use menu above to try each todo.
+  </p>
+  <p
+    class="text-gray-800 text-lg text-center px-6"
+  >
+    All data will be lost when you try to switch route or refresh.
   </p>
 </div>
 `;
