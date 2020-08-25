@@ -21,7 +21,7 @@ function Layout({ children }) {
           <Menu openMenu={openMenu} />
         </div>
       </nav>
-      <main className="container mx-auto mt-4">{children}</main>
+      <main className="container mx-auto mt-4 px-4 sm:px-0">{children}</main>
     </>
   );
 }

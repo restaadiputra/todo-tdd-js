@@ -7,16 +7,17 @@ function Menu({ openMenu }) {
   return (
     <div
       className={clsx([
-        'w-full lg:inline-flex lg:flex-grow lg:w-auto',
-        { hidden: !openMenu },
+        {
+          'max-h-0': !openMenu,
+          'max-h-200': openMenu,
+        },
+        'w-full overflow-hidden items-start flex flex-col text-gray-400 transition-all duration-500 ease-in-out lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto lg:items-center lg:h-auto text-gray-400',
       ])}
       data-testid="menu"
     >
-      <div className="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto text-gray-400">
-        <NavItem path="/props">Props</NavItem>
-        <NavItem path="/context">Context</NavItem>
-        <NavItem path="/redux">Redux</NavItem>
-      </div>
+      <NavItem path="/props">Props</NavItem>
+      <NavItem path="/context">Context</NavItem>
+      <NavItem path="/redux">Redux</NavItem>
     </div>
   );
 }

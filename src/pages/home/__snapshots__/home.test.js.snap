@@ -2,10 +2,15 @@
 
 exports[`render without crash 1`] = `
 <div
-  class="max-w-lg mx-auto mt-4"
+  class="max-w-lg mx-auto mt-4 flex flex-col items-center justify-center"
 >
+  <img
+    alt="todo"
+    class="mt-8 mb-12 w-48 md:w-56 lg:w-64"
+    src="todo.svg"
+  />
   <p
-    class="text-gray-800 text-lg text-center"
+    class="text-gray-800 text-lg text-center px-6"
   >
     Just 3 simple todo app with 3 different method of state management. Use menu above to try each todo.
   </p>

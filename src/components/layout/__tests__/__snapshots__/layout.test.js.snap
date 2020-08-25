@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render without error 1`] = `
+exports[`menu button works normally 1`] = `
 <nav
   class="w-full bg-gray-800 p-3"
 >
@@ -47,37 +47,33 @@ exports[`render without error 1`] = `
       </svg>
     </button>
     <div
-      class="w-full lg:inline-flex lg:flex-grow lg:w-auto hidden"
+      class="max-h-0 w-full overflow-hidden items-start flex flex-col text-gray-400 transition-all duration-500 ease-in-out lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto lg:items-center lg:h-auto text-gray-400"
       data-testid="menu"
     >
-      <div
-        class="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto text-gray-400"
+      <a
+        class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
+        href="/props"
       >
-        <a
-          class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
-          href="/props"
-        >
-          <span>
-            Props
-          </span>
-        </a>
-        <a
-          class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
-          href="/context"
-        >
-          <span>
-            Context
-          </span>
-        </a>
-        <a
-          class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
-          href="/redux"
-        >
-          <span>
-            Redux
-          </span>
-        </a>
-      </div>
+        <span>
+          Props
+        </span>
+      </a>
+      <a
+        class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
+        href="/context"
+      >
+        <span>
+          Context
+        </span>
+      </a>
+      <a
+        class="w-full px-3 py-2 rounded mr-2 hover:bg-gray-900 hover:text-white"
+        href="/redux"
+      >
+        <span>
+          Redux
+        </span>
+      </a>
     </div>
   </div>
 </nav>
