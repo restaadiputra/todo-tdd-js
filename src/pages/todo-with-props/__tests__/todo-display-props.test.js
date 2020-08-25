@@ -1,12 +1,15 @@
 import React from 'react';
 import { render, cleanup, fireEvent, within } from '@testing-library/react';
-import TodoDisplayProps from '../todo-display-props';
 
+import TodoDisplayProps from '../todo-display-props';
+import filterType from 'configs/filter';
+
+const { all, complete, notComplete } = filterType;
 const emptyTodoList = [];
 const todoList = [
-  { id: 1, title: 'Shopping', status: 'done' },
-  { id: 2, title: 'Shopping again', status: 'not-done' },
-  { id: 3, title: 'Shopping again and again', status: 'done' },
+  { id: 1, title: 'Shopping', status: true },
+  { id: 2, title: 'Shopping again', status: false },
+  { id: 3, title: 'Shopping again and again', status: true },
 ];
 
 const defaultProps = {
@@ -20,7 +23,7 @@ const setup = (props) => ({
 
 afterEach(cleanup);
 
-describe('TodoDisplay Component', () => {
+describe('Todo List Display', () => {
   test('display empty wording if prop "todo" is undefined or an empty array', () => {
     const { getByText, rerender } = setup();
     expect(getByText(/todo list is empty/i)).toBeInTheDocument();
@@ -29,12 +32,12 @@ describe('TodoDisplay Component', () => {
   });
 
   test('display todo list if todo is not empty array or undefined', () => {
-    const { getByTestId, getByText } = setup({ todoList });
+    const { getByTestId, queryByText } = setup({ todoList });
     const todoDisplay = getByTestId('todo-display');
     expect(todoDisplay.childElementCount).toBe(3);
-    expect(getByText(todoList[0].title)).toBeInTheDocument();
-    expect(getByText(todoList[1].title)).toBeInTheDocument();
-    expect(getByText(todoList[2].title)).toBeInTheDocument();
+    expect(queryByText(todoList[0].title)).toBeInTheDocument();
+    expect(queryByText(todoList[1].title)).toBeInTheDocument();
+    expect(queryByText(todoList[2].title)).toBeInTheDocument();
   });
 
   test('call "onRemoveTodo" function when remove button was clicked', () => {
@@ -57,5 +60,49 @@ describe('TodoDisplay Component', () => {
     fireEvent.click(statusBtn);
     expect(onChangeTodoStatus).toHaveBeenCalledTimes(1);
     expect(onChangeTodoStatus).toHaveBeenCalledWith(todoList[0].id);
+  });
+});
+
+describe('Todo List Filter', () => {
+  test('render all todo if filter is all', () => {
+    const { getByTestId, queryByText } = setup({ todoList, filter: all.value });
+    const todoDisplay = getByTestId('todo-display');
+    expect(todoDisplay.childElementCount).toBe(3);
+    expect(queryByText(todoList[0].title)).toBeInTheDocument();
+    expect(queryByText(todoList[1].title)).toBeInTheDocument();
+    expect(queryByText(todoList[2].title)).toBeInTheDocument();
+  });
+
+  test('render only complete todo', () => {
+    const { getByTestId, queryByText } = setup({
+      todoList,
+      filter: complete.value,
+    });
+    const todoDisplay = getByTestId('todo-display');
+    expect(todoDisplay.childElementCount).toBe(2);
+    expect(queryByText(todoList[0].title)).toBeInTheDocument();
+    expect(queryByText(todoList[1].title)).not.toBeInTheDocument();
+    expect(queryByText(todoList[2].title)).toBeInTheDocument();
+  });
+
+  test('render only not-complete todo', () => {
+    const { getByTestId, queryByText } = setup({
+      todoList,
+      filter: notComplete.value,
+    });
+    const todoDisplay = getByTestId('todo-display');
+    expect(todoDisplay.childElementCount).toBe(1);
+    expect(queryByText(todoList[0].title)).not.toBeInTheDocument();
+    expect(queryByText(todoList[1].title)).toBeInTheDocument();
+    expect(queryByText(todoList[2].title)).not.toBeInTheDocument();
+  });
+
+  test('render empty list if filter is not match', () => {
+    const { getByTestId, queryByText } = setup({ todoList, filter: 'RANDOM' });
+    const todoDisplay = getByTestId('todo-display');
+    expect(todoDisplay.childElementCount).toBe(0);
+    expect(queryByText(todoList[0].title)).not.toBeInTheDocument();
+    expect(queryByText(todoList[1].title)).not.toBeInTheDocument();
+    expect(queryByText(todoList[2].title)).not.toBeInTheDocument();
   });
 });

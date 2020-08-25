@@ -59,6 +59,20 @@ test('delete one todo by id and keep the rest same', () => {
       payload: 0,
     })
   ).toEqual([todoList[2], todoList[1]]);
+
+  expect(
+    todos([todoList[2], todoList[1], todoList[0]], {
+      type: deleteTodoById.type,
+      payload: 1,
+    })
+  ).toEqual([todoList[2], todoList[0]]);
+
+  expect(
+    todos([todoList[2], todoList[1], todoList[0]], {
+      type: deleteTodoById.type,
+      payload: 2,
+    })
+  ).toEqual([todoList[1], todoList[0]]);
 });
 
 test('keep todo list same on delete if the id is not in the todo list', () => {
@@ -83,6 +97,32 @@ test('update one todo status by id and keep the rest same', () => {
       ...todoList[0],
       status: !todoList[0].status,
     },
+  ]);
+  expect(
+    todos([todoList[2], todoList[1], todoList[0]], {
+      type: updateTodoById.type,
+      payload: 1,
+    })
+  ).toEqual([
+    todoList[2],
+    {
+      ...todoList[1],
+      status: !todoList[1].status,
+    },
+    todoList[0],
+  ]);
+  expect(
+    todos([todoList[2], todoList[1], todoList[0]], {
+      type: updateTodoById.type,
+      payload: 2,
+    })
+  ).toEqual([
+    {
+      ...todoList[2],
+      status: !todoList[2].status,
+    },
+    todoList[1],
+    todoList[0],
   ]);
 });
 

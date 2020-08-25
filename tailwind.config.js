@@ -19,11 +19,15 @@ module.exports = {
         '200': '200px',
         full: '100%',
       },
+      inset: {
+        '-32': '-8rem',
+      },
     },
   },
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
     textColor: ['responsive', 'hover', 'focus', 'active'],
+    outline: ['responsive', 'focus', 'hover', 'active'],
   },
   plugins: [require('@tailwindcss/custom-forms')],
 };

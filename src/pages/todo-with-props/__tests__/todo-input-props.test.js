@@ -15,43 +15,41 @@ const setup = (options = {}) => {
   return { inputTodo, btnAddTodo };
 };
 
-describe('TodoInput Component', () => {
-  test('should render without error', () => {
-    const { inputTodo, btnAddTodo } = setup();
+test('render without error', () => {
+  const { inputTodo, btnAddTodo } = setup();
 
-    expect(inputTodo).toHaveAttribute('placeholder', 'Your Todo');
-    expect(inputTodo).toHaveAttribute('type', 'text');
+  expect(inputTodo).toHaveAttribute('placeholder', 'Your Todo');
+  expect(inputTodo).toHaveAttribute('type', 'text');
 
-    expect(btnAddTodo.textContent).toBe('Add');
-    expect(btnAddTodo).toHaveAttribute('type', 'submit');
-    expect(btnAddTodo).toBeDisabled();
-  });
+  expect(btnAddTodo.textContent).toBe('Add');
+  expect(btnAddTodo).toHaveAttribute('type', 'submit');
+  expect(btnAddTodo).toBeDisabled();
+});
 
-  test('should enabled "Add" button when input is not empty', () => {
-    const { inputTodo, btnAddTodo } = setup();
+test('enabled "Add" button when input is not empty', () => {
+  const { inputTodo, btnAddTodo } = setup();
 
-    userEvent.type(inputTodo, todo);
-    expect(btnAddTodo).not.toBeDisabled();
-  });
+  userEvent.type(inputTodo, todo);
+  expect(btnAddTodo).not.toBeDisabled();
+});
 
-  test('should call "onSubmitTodo" when button is clicked', () => {
-    const onSubmitTodo = jest.fn(() => {});
-    const { inputTodo, btnAddTodo } = setup({ onSubmitTodo });
+test('call "onSubmitTodo" when button is clicked', () => {
+  const onSubmitTodo = jest.fn();
+  const { inputTodo, btnAddTodo } = setup({ onSubmitTodo });
 
-    userEvent.type(inputTodo, todo);
-    userEvent.click(btnAddTodo);
+  userEvent.type(inputTodo, todo);
+  userEvent.click(btnAddTodo);
 
-    expect(onSubmitTodo).toHaveBeenCalledTimes(1);
-    expect(onSubmitTodo).toHaveBeenCalledWith(todo);
-  });
+  expect(onSubmitTodo).toHaveBeenCalledTimes(1);
+  expect(onSubmitTodo).toHaveBeenCalledWith(todo);
+});
 
-  test('should clear input field after add todo', () => {
-    const onSubmitTodo = jest.fn(() => {});
-    const { inputTodo, btnAddTodo } = setup({ onSubmitTodo });
+test('clear input field after add todo', () => {
+  const onSubmitTodo = jest.fn();
+  const { inputTodo, btnAddTodo } = setup({ onSubmitTodo });
 
-    userEvent.type(inputTodo, todo);
-    userEvent.click(btnAddTodo);
+  userEvent.type(inputTodo, todo);
+  userEvent.click(btnAddTodo);
 
-    expect(inputTodo.value).toBe('');
-  });
+  expect(inputTodo.value).toBe('');
 });
