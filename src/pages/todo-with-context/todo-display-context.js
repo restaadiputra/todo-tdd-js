@@ -21,13 +21,13 @@ function TodoDisplayContext() {
             <input
               type="checkbox"
               className="form-checkbox h-5 w-5 mr-4 text-orange-500 border-orange-500 outline-none"
-              checked={todo.status === 'done'}
+              checked={todo.status}
               onChange={() => updateTodoById(todo.id)}
             />
             <p
               className={
                 'text-lg text-left flex-grow break-words w-5/6 transition-colors duration-500 ease-in-out ' +
-                (todo.status === 'done'
+                (todo.status
                   ? 'text-orange-500 line-through'
                   : 'text-orange-700')
               }

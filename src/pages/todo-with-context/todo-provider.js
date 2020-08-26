@@ -1,17 +1,35 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
+import filterType from 'configs/filter';
 
 export const TodoContext = createContext();
+export const useTodo = () => useContext(TodoContext);
 
-function TodoProvider({ initialState, children }) {
-  const [todoList, setTodoList] = useState(initialState || []);
+export const getFilteredTodo = (todoList, filter) => {
+  switch (filter) {
+    case filterType.all.value:
+      return todoList;
+    case filterType.complete.value:
+      return todoList.filter((todo) => todo.status);
+    case filterType.notComplete.value:
+      return todoList.filter((todo) => !todo.status);
+    default:
+      return [];
+  }
+};
+
+function TodoProvider({ initialState = {}, children }) {
+  const [todoList, setTodoList] = useState(initialState.todoList || []);
+  const [filter, setFilter] = useState(
+    initialState.filter || filterType.all.value
+  );
 
   const addTodo = (todo) => {
     setTodoList([
       {
         id: todoList.length,
         title: todo,
-        status: 'not-done',
+        status: false,
       },
       ...todoList,
     ]);
@@ -25,19 +43,21 @@ function TodoProvider({ initialState, children }) {
     setTodoList(
       todoList.map((todo) => ({
         ...todo,
-        status:
-          todo.id === id
-            ? todo.status === 'done'
-              ? 'not-done'
-              : 'done'
-            : todo.status,
+        status: todo.id === id ? !todo.status : todo.status,
       }))
     );
   };
 
   return (
     <TodoContext.Provider
-      value={{ todoList, addTodo, deleteTodoById, updateTodoById }}
+      value={{
+        todoList: getFilteredTodo(todoList, filter),
+        addTodo,
+        deleteTodoById,
+        updateTodoById,
+        filter,
+        setFilter,
+      }}
     >
       {children}
     </TodoContext.Provider>
@@ -45,13 +65,16 @@ function TodoProvider({ initialState, children }) {
 }
 
 TodoProvider.propTypes = {
-  initialState: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
-    })
-  ),
+  initialState: PropTypes.shape({
+    todoList: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        status: PropTypes.bool.isRequired,
+      })
+    ),
+    filter: PropTypes.string,
+  }),
   children: PropTypes.node,
 };
 

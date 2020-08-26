@@ -1,49 +1,68 @@
 import React from 'react';
-import { render, cleanup, fireEvent, within } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import TodoFilterProps from '../todo-filter-props';
 import filterType from 'configs/filter';
 
-afterEach(cleanup);
-
 const onFilter = jest.fn();
 const { all, complete, notComplete } = filterType;
+const activeClass = 'bg-gray-400 border-gray-400';
 
-test('call "onFilter" when button was clicked', () => {
-  const { getByText } = render(
-    <TodoFilterProps onFilter={onFilter} filter="" />
-  );
-  const allFilterBtn = getByText(all.label);
-  const completeFilterBtn = getByText(complete.label);
-  const notCompleteFilterBtn = getByText(notComplete.label);
+afterEach(cleanup);
 
-  fireEvent.click(allFilterBtn);
-  expect(onFilter).toHaveBeenCalledWith(all.value);
-  fireEvent.click(completeFilterBtn);
-  expect(onFilter).toHaveBeenCalledWith(complete.value);
-  fireEvent.click(notCompleteFilterBtn);
-  expect(onFilter).toHaveBeenCalledWith(notComplete.value);
-  expect(onFilter).toHaveBeenCalledTimes(3);
-});
+describe('todo list display', () => {
+  test('call "onFilter" when button was clicked with the right value', () => {
+    const { getByText } = render(
+      <TodoFilterProps onFilter={onFilter} filter="" />
+    );
+    const allFilterBtn = getByText(all.label);
+    const completeFilterBtn = getByText(complete.label);
+    const notCompleteFilterBtn = getByText(notComplete.label);
 
-test('have active style when click', () => {
-  const { getByText, rerender } = render(
-    <TodoFilterProps onFilter={onFilter} filter={all.value} />
-  );
-  const allFilterBtn = getByText(all.label);
-  expect(allFilterBtn.getAttribute('class')).toContain(
-    'bg-gray-400 border-gray-400'
-  );
+    fireEvent.click(allFilterBtn);
+    expect(onFilter).toHaveBeenCalledWith(all.value);
+    fireEvent.click(completeFilterBtn);
+    expect(onFilter).toHaveBeenCalledWith(complete.value);
+    fireEvent.click(notCompleteFilterBtn);
+    expect(onFilter).toHaveBeenCalledWith(notComplete.value);
+    expect(onFilter).toHaveBeenCalledTimes(3);
+  });
 
-  rerender(<TodoFilterProps onFilter={onFilter} filter={complete.value} />);
-  const completeFilterBtn = getByText(complete.label);
-  expect(completeFilterBtn.getAttribute('class')).toContain(
-    'bg-gray-400 border-gray-400'
-  );
+  test('have active style when click', () => {
+    const { getByText, rerender } = render(
+      <TodoFilterProps onFilter={onFilter} filter={all.value} />
+    );
+    const allFilterBtn = getByText(all.label);
+    const completeFilterBtn = getByText(complete.label);
+    const notCompleteFilterBtn = getByText(notComplete.label);
 
-  rerender(<TodoFilterProps onFilter={onFilter} filter={notComplete.value} />);
-  const notCompleteFilterBtn = getByText(notComplete.label);
-  expect(notCompleteFilterBtn.getAttribute('class')).toContain(
-    'bg-gray-400 border-gray-400'
-  );
+    expect(allFilterBtn.getAttribute('class')).toContain(activeClass);
+    expect(allFilterBtn.getAttribute('disabled')).not.toBeNull();
+    expect(completeFilterBtn.getAttribute('class')).not.toContain(activeClass);
+    expect(completeFilterBtn.getAttribute('disabled')).toBeNull();
+    expect(notCompleteFilterBtn.getAttribute('class')).not.toContain(
+      activeClass
+    );
+    expect(notCompleteFilterBtn.getAttribute('disabled')).toBeNull();
+
+    rerender(<TodoFilterProps onFilter={onFilter} filter={complete.value} />);
+    expect(allFilterBtn.getAttribute('class')).not.toContain(activeClass);
+    expect(allFilterBtn.getAttribute('disabled')).toBeNull();
+    expect(completeFilterBtn.getAttribute('class')).toContain(activeClass);
+    expect(completeFilterBtn.getAttribute('disabled')).not.toBeNull();
+    expect(notCompleteFilterBtn.getAttribute('class')).not.toContain(
+      activeClass
+    );
+    expect(notCompleteFilterBtn.getAttribute('disabled')).toBeNull();
+
+    rerender(
+      <TodoFilterProps onFilter={onFilter} filter={notComplete.value} />
+    );
+    expect(allFilterBtn.getAttribute('class')).not.toContain(activeClass);
+    expect(allFilterBtn.getAttribute('disabled')).toBeNull();
+    expect(completeFilterBtn.getAttribute('class')).not.toContain(activeClass);
+    expect(completeFilterBtn.getAttribute('disabled')).toBeNull();
+    expect(notCompleteFilterBtn.getAttribute('class')).toContain(activeClass);
+    expect(notCompleteFilterBtn.getAttribute('disabled')).not.toBeNull();
+  });
 });

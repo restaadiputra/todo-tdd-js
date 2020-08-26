@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import TodoInput from '../todo-input-context';
 import TodoProvider from '../todo-provider';
 
-const setup = (initialState = []) => {
+const setup = (initialState = {}) => {
   const { getByPlaceholderText, getByText } = render(
     <TodoProvider initialState={initialState}>
       <TodoInput />
