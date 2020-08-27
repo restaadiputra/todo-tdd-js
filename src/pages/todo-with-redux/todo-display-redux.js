@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteTodoById, updateTodoById } from 'store/todoSlice';
+import { filteredTodo } from 'store/filterSlice';
 
 function TodoDisplayRedux() {
   const dispatch = useDispatch();
-  const todoList = useSelector((state) => state.todo);
-
+  const todoList = useSelector(filteredTodo);
+  // console.log(todoList)
   return (
     <div data-testid="todo-display" className="max-w-lg mx-auto mt-4">
       {!todoList || todoList.length === 0 ? (

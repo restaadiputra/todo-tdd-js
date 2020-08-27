@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent, within } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 
 import { TodoContext } from '../todo-provider';
 import TodoFilterProps from '../todo-filter-context';

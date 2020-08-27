@@ -4,6 +4,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import todo from 'store/todoSlice';
+import filter from 'store/filterSlice';
+import filterType from 'configs/filter';
 
 export const renderWithRouter = (component) => {
   return {
@@ -13,10 +15,13 @@ export const renderWithRouter = (component) => {
 
 export const renderWithStore = (
   component,
-  initialState = [],
+  initialState = {},
   store = configureStore({
-    reducer: { todo },
-    preloadedState: { todo: initialState },
+    reducer: { todo, filter },
+    preloadedState: {
+      todo: initialState.todo || [],
+      filter: initialState.filter || filterType.all.value,
+    },
   })
 ) => {
   return {

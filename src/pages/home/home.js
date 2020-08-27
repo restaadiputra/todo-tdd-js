@@ -13,8 +13,11 @@ function Home() {
         Just 3 simple todo app with 3 different method of state management. Use
         menu above to try each todo.
       </p>
-      <p className="text-gray-800 text-lg text-center px-6">
+      <p className="text-gray-800 text-lg text-center px-6 mb-4">
         All data will be lost when you try to switch route or refresh.
+      </p>
+      <p className="text-gray-800 text-lg text-center px-6 mb-4">
+        Created with CRA and TailwindCSS
       </p>
     </div>
   );

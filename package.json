@@ -29,7 +29,9 @@
       "!**/node_modules/**",
       "!**/coverage/**",
       "!**/serviceWorker.js",
-      "!**/index.js"
+      "!**/index.js",
+      "!**/configs/**",
+      "!**/store/store.js"
     ]
   },
   "husky": {
